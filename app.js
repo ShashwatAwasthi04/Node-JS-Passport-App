@@ -7,12 +7,15 @@ const app = express();
 const db= require('./config/keys').MongoURI;
 
 //Connect to Mongo
-mongoose.connect(db, {useNewUrlParser : true})
+mongoose.connect(db, {useUnifiedTopology: true,useNewUrlParser : true})
 .then(()=> console.log('Mongo DB Connected'))
 .catch(err => console.log(err));
 
 app.use(expressLayouts);
 app.set('view engine','ejs');
+
+//Bodyparser
+app.use(express.urlencoded({extended: false}));
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
